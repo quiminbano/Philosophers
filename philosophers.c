@@ -6,11 +6,26 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/10 17:42:49 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/12 19:27:12 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	ft_initialize_problem(t_error *p, t_phi **phi, char **av)
+{
+	t_phi	*iter;
+
+	iter = (*phi);
+	p->n_philo = ft_atoi(av[1]);
+	p->i = 1;
+	while (p->i <= p->n_philo)
+	{
+		ft_add_to_list(&(iter), p->i, av);
+		(p->i)++;
+	}
+	ft_print_list(&(iter));
+}
 
 static int	ft_error_message(t_error *p)
 {
@@ -34,8 +49,10 @@ static int	ft_error_message(t_error *p)
 int	main(int ac, char **av)
 {
 	t_error	p;
+	t_phi	*phi;
 
 	p.i = 1;
+	phi = NULL;
 	if (ac < 5 || ac > 6)
 	{
 		p.s_error = 1;
@@ -50,6 +67,6 @@ int	main(int ac, char **av)
 			return (ft_error_message(&(p)));
 		(p.i)++;
 	}
-	ft_initialize_problem(&p, av);
+	ft_initialize_problem(&p, &phi, av);
 	return (0);
 }
