@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:01:19 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/13 16:38:22 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/13 21:10:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@ void	ft_add_to_list(t_phi **begin, int num, t_data *p)
 	else
 	{
 		while (iter->left != NULL)
+		{
+			iter->begin = *begin;
 			iter = iter->left;
+		}
 		iter->left = new;
 	}
+	new->begin = *begin;
 }
 
 t_phi	*ft_lstnew(int num, t_data *p)

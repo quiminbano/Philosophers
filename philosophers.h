@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/13 15:58:03 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/13 21:03:32 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_phi
 	long			time;
 	t_data			*ti;
 	struct s_phi	*left;
+	struct s_phi	*begin;
 }t_phi;
 
 int		ft_check_valid_number(char const *str);

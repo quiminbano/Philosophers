@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:03:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/13 16:51:33 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/13 21:39:37 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ void	ft_taking_fork(t_phi **phi)
 		pthread_mutex_lock(&((*phi)->mutex));
 		(*phi)->f_state = 0;
 		pthread_mutex_unlock(&((*phi)->mutex));
+	}
+	if (((*phi)->phi_num == (*phi)->ti->n_philo) && \
+		((*phi)->begin->f_state == 1))
+	{
+		pthread_mutex_lock(&((*phi)->begin->mutex));
+		(*phi)->begin->f_state = 0;
+		pthread_mutex_unlock(&((*phi)->begin->mutex));
 	}
 }
 
