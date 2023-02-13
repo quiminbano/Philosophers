@@ -6,28 +6,65 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/12 19:27:12 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:46:05 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	ft_initialize_problem(t_error *p, t_phi **phi, char **av)
+static void	*ft_start_routine(t_phi *phi)
 {
-	t_phi	*iter;
-
-	iter = (*phi);
-	p->n_philo = ft_atoi(av[1]);
-	p->i = 1;
-	while (p->i <= p->n_philo)
+	while (phi->ti->die_st == 0)
 	{
-		ft_add_to_list(&(iter), p->i, av);
-		(p->i)++;
+		if (phi->ti->die_st == 0)
+			ft_taking_fork(&phi);
+		if (phi->ti->die_st == 0)
+			ft_eating(&phi);
+		if (phi->ti->die_st == 0)
+			ft_sleeping(&phi);
+		if (phi->ti->die_st == 0)
+			ft_thinking(&phi);
+		if (phi->ti->die_st == 1)
+			break ;
 	}
-	ft_print_list(&(iter));
+	return (NULL);
 }
 
-static int	ft_error_message(t_error *p)
+static int	ft_prepare_threads(t_phi **phi)
+{
+	t_phi	*temp;
+
+	temp = *phi;
+	while (temp != NULL)
+	{
+		pthread_mutex_init(&(temp->mutex), NULL);
+		pthread_create(&(temp->po), NULL, &ft_start_routine, &(*temp));
+		temp = temp->left;
+	}
+}
+
+static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
+{
+	p->n_philo = ft_atoi(av[1]);
+	p->i = 1;
+	gettimeofday(&(p->tp), NULL);
+	p->s0 = p->tp.tv_sec;
+	p->us0 = p->tp.tv_usec;
+	p->die_st = 0;
+	p->t_die = ft_atoi(av[2]);
+	p->t_eat = ft_atoi(av[3]);
+	p->t_sleep = ft_atoi(av[4]);
+	if (av[5] != NULL)
+		p->ti_eat = ft_atoi(av[5]);
+	while (p->i <= p->n_philo)
+	{
+		ft_add_to_list(&(*phi), p->i, p);
+		(p->i)++;
+	}
+	return (ft_prepare_threads(&(*phi)));
+}
+
+static int	ft_error_message(t_data *p)
 {
 	if (p->s_error == 1)
 	{
@@ -48,7 +85,7 @@ static int	ft_error_message(t_error *p)
 
 int	main(int ac, char **av)
 {
-	t_error	p;
+	t_data	p;
 	t_phi	*phi;
 
 	p.i = 1;
@@ -67,6 +104,5 @@ int	main(int ac, char **av)
 			return (ft_error_message(&(p)));
 		(p.i)++;
 	}
-	ft_initialize_problem(&p, &phi, av);
-	return (0);
+	return (ft_initialize_problem(&p, &phi, av));
 }
