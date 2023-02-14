@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/13 21:03:32 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:32:23 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ typedef struct s_data
 {
 	struct timeval	tp;
 	pthread_mutex_t	mutex_d;
+	struct s_phi	*begin;
 	int				s_error;
 	int				i;
 	int				n_philo;
+	int				philo_1;
 	int				t_die;
 	int				t_eat;
 	int				t_sleep;
@@ -46,9 +48,9 @@ typedef struct s_phi
 	long			s1;
 	long			us1;
 	long			time;
+	long			o_time;
 	t_data			*ti;
 	struct s_phi	*left;
-	struct s_phi	*begin;
 }t_phi;
 
 int		ft_check_valid_number(char const *str);

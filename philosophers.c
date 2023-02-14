@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/13 16:46:05 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:06:33 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	*ft_start_routine(t_phi *phi)
 {
-	while (phi->ti->die_st == 0)
+	while (phi->ti->die_st == 0 && phi->ti->philo_1 == 0)
 	{
+		if (phi->ti->die_st == 0)
+			ft_thinking(&phi);
 		if (phi->ti->die_st == 0)
 			ft_taking_fork(&phi);
 		if (phi->ti->die_st == 0)
 			ft_eating(&phi);
 		if (phi->ti->die_st == 0)
 			ft_sleeping(&phi);
-		if (phi->ti->die_st == 0)
-			ft_thinking(&phi);
 		if (phi->ti->die_st == 1)
 			break ;
 	}
@@ -51,9 +51,11 @@ static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
 	p->s0 = p->tp.tv_sec;
 	p->us0 = p->tp.tv_usec;
 	p->die_st = 0;
+	p->philo_1 = 0;
 	p->t_die = ft_atoi(av[2]);
 	p->t_eat = ft_atoi(av[3]);
 	p->t_sleep = ft_atoi(av[4]);
+	p->begin = (*phi);
 	if (av[5] != NULL)
 		p->ti_eat = ft_atoi(av[5]);
 	while (p->i <= p->n_philo)
