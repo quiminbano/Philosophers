@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 09:43:59 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/15 16:58:11 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:58:42 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_get_current_time(t_phi **phi)
 	usleep(500);
 }
 
-void	ft_usleep(long time)
+void	ft_msleep(long time)
 {
 	struct timeval	ti;
 	struct timeval	tf;
