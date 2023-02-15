@@ -6,25 +6,28 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/14 17:06:33 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:04:03 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	*ft_start_routine(t_phi *phi)
+static void	*ft_start_routine(void *p)
 {
+	t_phi	*phi;
+
+	phi = (t_phi *)p;
 	while (phi->ti->die_st == 0 && phi->ti->philo_1 == 0)
 	{
 		if (phi->ti->die_st == 0)
 			ft_thinking(&phi);
 		if (phi->ti->die_st == 0)
 			ft_taking_fork(&phi);
-		if (phi->ti->die_st == 0)
+		if (phi->ti->die_st == 0 && phi->ti->philo_1 == 0)
 			ft_eating(&phi);
-		if (phi->ti->die_st == 0)
+		if (phi->ti->die_st == 0 && phi->ti->philo_1 == 0)
 			ft_sleeping(&phi);
-		if (phi->ti->die_st == 1)
+		if (phi->ti->die_st == 1 && phi->ti->philo_1 == 0)
 			break ;
 	}
 	return (NULL);
@@ -34,13 +37,28 @@ static int	ft_prepare_threads(t_phi **phi)
 {
 	t_phi	*temp;
 
-	temp = *phi;
+	temp = (*phi);
+	pthread_mutex_init(&(*phi)->ti->mutex_d, NULL);
 	while (temp != NULL)
 	{
 		pthread_mutex_init(&(temp->mutex), NULL);
 		pthread_create(&(temp->po), NULL, &ft_start_routine, &(*temp));
 		temp = temp->left;
 	}
+	temp = (*phi);
+	while (temp != NULL)
+	{
+		pthread_join((temp->po), NULL);
+		temp = temp->left;
+	}
+	temp = (*phi);
+	pthread_mutex_destroy(&((*phi)->ti->mutex_d));
+	while (temp != NULL)
+	{
+		pthread_mutex_destroy(&(*phi)->mutex);
+		temp = temp->left;
+	}
+	return (0);
 }
 
 static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
@@ -55,7 +73,6 @@ static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
 	p->t_die = ft_atoi(av[2]);
 	p->t_eat = ft_atoi(av[3]);
 	p->t_sleep = ft_atoi(av[4]);
-	p->begin = (*phi);
 	if (av[5] != NULL)
 		p->ti_eat = ft_atoi(av[5]);
 	while (p->i <= p->n_philo)
@@ -63,6 +80,7 @@ static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
 		ft_add_to_list(&(*phi), p->i, p);
 		(p->i)++;
 	}
+	p->begin = (*phi);
 	return (ft_prepare_threads(&(*phi)));
 }
 

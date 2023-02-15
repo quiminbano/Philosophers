@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:01:19 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/14 10:20:49 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:11:17 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_phi	*ft_lstnew(int num, t_data *p)
 	if (new == NULL)
 		return (NULL);
 	new->phi_num = num;
-	new->f_state = 0;
+	new->f_state = 1;
 	new->ti = p;
 	new->left = NULL;
 	return (new);
@@ -50,7 +50,7 @@ void	ft_print_list(t_phi **lst)
 	temp = *lst;
 	while (temp != NULL)
 	{
-		printf("%d -> ", temp->ti->t_die);
+		printf("%d -> ", temp->phi_num);
 		temp = temp->left;
 	}
 	printf("\n");

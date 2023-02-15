@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/14 16:32:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:42:18 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,11 @@ size_t	ft_strlen(char const *str);
 t_phi	*ft_lstnew(int num, t_data *p);
 void	ft_add_to_list(t_phi **begin, int num, t_data *p);
 void	ft_print_list(t_phi **lst);
+void	ft_get_current_time(t_phi **phi);
+void	ft_thinking(t_phi **phi);
+void	ft_taking_fork(t_phi **phi);
+void	ft_eating(t_phi **phi);
+void	ft_sleeping(t_phi **phi);
+void	ft_unlock_mutexes(t_phi **phi);
 
 #endif
