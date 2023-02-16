@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/15 11:42:18 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:24:44 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	ft_taking_fork(t_phi **phi);
 void	ft_eating(t_phi **phi);
 void	ft_sleeping(t_phi **phi);
 void	ft_unlock_mutexes(t_phi **phi);
+void	ft_free_list(t_phi **phi);
 
 #endif

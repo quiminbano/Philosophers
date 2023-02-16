@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 09:43:59 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/15 16:58:42 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/16 11:44:27 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,4 @@ void	ft_get_current_time(t_phi **phi)
 	(*phi)->time = ((((*phi)->s1 - (*phi)->ti->s0) * 1000) + \
 		(((*phi)->us1 - (*phi)->ti->us0) / 1000));
 	usleep(500);
-}
-
-void	ft_msleep(long time)
-{
-	struct timeval	ti;
-	struct timeval	tf;
-	long			time;
-
-	gettimeofday(&(ti), NULL);
-	gettimeofday(&(tf), NULL);
-	time = ((tf.tv_sec - ti.tv_sec) * 1000) + ();
 }

@@ -6,11 +6,29 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:01:19 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/15 12:11:17 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:47:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	ft_free_list(t_phi **phi)
+{
+	int		j;
+	t_phi	*temp;
+	t_phi	*temp2;
+
+	j = 0;
+	temp2 = (*phi)->left;
+	temp = (*phi);
+	while (temp->left != NULL)
+	{
+		free(temp);
+		temp = temp2;
+		temp2 = temp2->left;
+	}
+	free(temp);
+}
 
 void	ft_add_to_list(t_phi **begin, int num, t_data *p)
 {
@@ -37,7 +55,7 @@ t_phi	*ft_lstnew(int num, t_data *p)
 	if (new == NULL)
 		return (NULL);
 	new->phi_num = num;
-	new->f_state = 1;
+	new->f_state = 0;
 	new->ti = p;
 	new->left = NULL;
 	return (new);

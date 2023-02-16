@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/15 16:04:03 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:43:58 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ static int	ft_prepare_threads(t_phi **phi)
 		temp = temp->left;
 	}
 	temp = (*phi);
-	pthread_mutex_destroy(&((*phi)->ti->mutex_d));
 	while (temp != NULL)
 	{
 		pthread_mutex_destroy(&(*phi)->mutex);
 		temp = temp->left;
 	}
+	pthread_mutex_destroy(&((*phi)->ti->mutex_d));
+	ft_free_list(&(*phi));
 	return (0);
 }
 
