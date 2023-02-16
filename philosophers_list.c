@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:01:19 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/16 12:47:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/16 21:13:20 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	ft_free_list(t_phi **phi)
 {
-	int		j;
 	t_phi	*temp;
 	t_phi	*temp2;
 
-	j = 0;
 	temp2 = (*phi)->left;
 	temp = (*phi);
 	while (temp->left != NULL)

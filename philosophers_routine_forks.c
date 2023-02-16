@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:47:23 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/16 16:59:44 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/16 21:23:30 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static void	ft_taking_fork_print(t_phi **phi)
 		(*phi)->o_time = (*phi)->time;
 		while (((*phi)->time - (*phi)->o_time) < (*phi)->ti->t_die)
 			ft_get_current_time(&(*phi));
-		printf("%ldms %d died.\n", (*phi)->time, (*phi)->phi_num);
-		pthread_mutex_lock(&((*phi)->ti->mutex_d));
-		(*phi)->ti->die_st = 1;
-		pthread_mutex_unlock(&((*phi)->ti->mutex_d));
+		ft_dying(&(*phi));
 		pthread_mutex_unlock(&((*phi)->mutex));
 		return ;
 	}
@@ -37,15 +34,10 @@ static void	ft_taking_fork_time(t_phi **phi)
 	ft_get_current_time(&(*phi));
 	if (((*phi)->time - (*phi)->o_time) >= (*phi)->ti->t_die)
 	{
-		printf("%ldms %d died.\n", (*phi)->time, (*phi)->phi_num);
-		pthread_mutex_lock(&((*phi)->ti->mutex_d));
-		(*phi)->ti->die_st = 1;
-		pthread_mutex_unlock(&((*phi)->ti->mutex_d));
+		ft_dying(&(*phi));
 		ft_unlock_mutexes(&(*phi));
 		return ;
 	}
-	else if ((*phi)->ti->die_st == 1)
-		return ;
 }
 
 void	ft_taking_fork(t_phi **phi)
