@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/16 16:43:58 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/17 21:56:09 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,22 @@ static void	*ft_start_routine(void *p)
 	t_phi	*phi;
 
 	phi = (t_phi *)p;
-	while (phi->ti->die_st == 0 && phi->ti->philo_1 == 0)
+	while ((phi->ti->die_st == 0) && (phi->ti->philo_1 == 0) && \
+		(phi->ti->philo_eat_c < phi->ti->n_philo))
 	{
-		if (phi->ti->die_st == 0)
-			ft_thinking(&phi);
-		if (phi->ti->die_st == 0)
-			ft_taking_fork(&phi);
-		if (phi->ti->die_st == 0 && phi->ti->philo_1 == 0)
-			ft_eating(&phi);
-		if (phi->ti->die_st == 0 && phi->ti->philo_1 == 0)
-			ft_sleeping(&phi);
+		ft_routine_iter(&(*phi));
 		if (phi->ti->die_st == 1 && phi->ti->philo_1 == 0)
+			break ;
+		if (phi->ti->philo_eat_c >= phi->ti->n_philo)
 			break ;
 	}
 	return (NULL);
 }
 
-static int	ft_prepare_threads(t_phi **phi)
+static int	ft_prepare_threads_aux(t_phi **phi)
 {
 	t_phi	*temp;
 
-	temp = (*phi);
-	pthread_mutex_init(&(*phi)->ti->mutex_d, NULL);
-	while (temp != NULL)
-	{
-		pthread_mutex_init(&(temp->mutex), NULL);
-		pthread_create(&(temp->po), NULL, &ft_start_routine, &(*temp));
-		temp = temp->left;
-	}
 	temp = (*phi);
 	while (temp != NULL)
 	{
@@ -54,12 +42,31 @@ static int	ft_prepare_threads(t_phi **phi)
 	temp = (*phi);
 	while (temp != NULL)
 	{
-		pthread_mutex_destroy(&(*phi)->mutex);
+		pthread_mutex_destroy(&(temp->mutex));
 		temp = temp->left;
 	}
-	pthread_mutex_destroy(&((*phi)->ti->mutex_d));
+	pthread_mutex_destroy(&((*phi)->ti->mutex_dead));
+	if ((*phi)->ti->ti_eat != 0)
+		pthread_mutex_destroy(&((*phi)->ti->mutex_eat));
 	ft_free_list(&(*phi));
 	return (0);
+}
+
+static int	ft_prepare_threads(t_phi **phi)
+{
+	t_phi	*temp;
+
+	temp = (*phi);
+	pthread_mutex_init(&(*phi)->ti->mutex_dead, NULL);
+	if (temp->ti->ti_eat != 0)
+		pthread_mutex_init(&(*phi)->ti->mutex_eat, NULL);
+	while (temp != NULL)
+	{
+		pthread_mutex_init(&(temp->mutex), NULL);
+		pthread_create(&(temp->po), NULL, &ft_start_routine, &(*temp));
+		temp = temp->left;
+	}
+	return (ft_prepare_threads_aux(&(*phi)));
 }
 
 static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
@@ -71,11 +78,14 @@ static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
 	p->us0 = p->tp.tv_usec;
 	p->die_st = 0;
 	p->philo_1 = 0;
+	p->philo_eat_c = 0;
 	p->t_die = ft_atoi(av[2]);
 	p->t_eat = ft_atoi(av[3]);
 	p->t_sleep = ft_atoi(av[4]);
 	if (av[5] != NULL)
 		p->ti_eat = ft_atoi(av[5]);
+	else
+		p->ti_eat = 0;
 	while (p->i <= p->n_philo)
 	{
 		ft_add_to_list(&(*phi), p->i, p);
@@ -83,25 +93,6 @@ static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
 	}
 	p->begin = (*phi);
 	return (ft_prepare_threads(&(*phi)));
-}
-
-static int	ft_error_message(t_data *p)
-{
-	if (p->s_error == 1)
-	{
-		write(2, "philo: Input not valid.\n", 24);
-		write(2, "Usage:\n./philo number_philosophers time_die ", 44);
-		write(2, "time_eat time_sleep [n_times_eat(optional)]\n", 44);
-		write(2, "time_die, time_eat, time_sleep should be express", 48);
-		write(2, " in milliseconds(ms).\n", 22);
-	}
-	if (p->s_error == 2)
-	{
-		write(2, "philo: Input not valid.\n", 24);
-		write(2, "You must write only positive numbers, and they ", 47);
-		write(2, "must be between 1 ann MAX_INT\n", 30);
-	}
-	return (1);
 }
 
 int	main(int ac, char **av)
