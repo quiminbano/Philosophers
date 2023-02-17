@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/17 21:56:09 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:48:00 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void	*ft_start_routine(void *p)
 	t_phi	*phi;
 
 	phi = (t_phi *)p;
-	while ((phi->ti->die_st == 0) && (phi->ti->philo_1 == 0) && \
-		(phi->ti->philo_eat_c < phi->ti->n_philo))
+	while ((phi->d_state == 0) && (phi->ti->philo_1 == 0) && \
+		(phi->e_counter < phi->ti->n_philo))
 	{
 		ft_routine_iter(&(*phi));
-		if (phi->ti->die_st == 1 && phi->ti->philo_1 == 0)
+		if (phi->d_state == 1 && phi->ti->philo_1 == 0)
 			break ;
-		if (phi->ti->philo_eat_c >= phi->ti->n_philo)
+		if (phi->e_counter >= phi->ti->n_philo)
 			break ;
 	}
 	return (NULL);

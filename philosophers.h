@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/17 21:52:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:34:27 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_phi
 	int				f_state;
 	int				eat_s;
 	int				count_eat;
+	int				d_state;
+	int				e_counter;
 	long			s1;
 	long			us1;
 	long			time;

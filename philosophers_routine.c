@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:03:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/17 21:52:02 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/17 23:57:48 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 void	ft_routine_iter(t_phi *phi)
 {
-	if (phi->ti->die_st == 0 && (phi->ti->philo_eat_c < phi->ti->n_philo))
+	if (phi->d_state == 0 && (phi->e_counter < phi->ti->n_philo))
 		ft_thinking(&phi);
-	if (phi->ti->die_st == 0 && (phi->ti->philo_eat_c < phi->ti->n_philo))
+	ft_dying_state(&phi);
+	if (phi->d_state == 0 && (phi->e_counter < phi->ti->n_philo))
 		ft_taking_fork(&phi);
-	if ((phi->ti->die_st == 0) && (phi->ti->philo_1 == 0) && \
-		(phi->ti->philo_eat_c < phi->ti->n_philo))
+	ft_dying_state(&phi);
+	if ((phi->d_state == 0) && (phi->ti->philo_1 == 0) && \
+		(phi->e_counter < phi->ti->n_philo))
 		ft_eating(&phi);
-	if ((phi->ti->die_st == 0) && (phi->ti->philo_1 == 0) && \
-		(phi->ti->philo_eat_c < phi->ti->n_philo))
+	ft_dying_state(&phi);
+	if ((phi->d_state == 0) && (phi->ti->philo_1 == 0) && \
+		(phi->e_counter < phi->ti->n_philo))
 		ft_sleeping(&phi);
-	if ((phi->ti->die_st == 0) && (phi->ti->philo_1 == 0) && \
-		(phi->ti->philo_eat_c < phi->ti->n_philo))
+	ft_dying_state(&phi);
+	if ((phi->d_state == 0) && (phi->ti->philo_1 == 0))
 	{
 		if (phi->ti->ti_eat > 0)
 			ft_eating_state(&phi);
@@ -49,6 +52,7 @@ void	ft_eating(t_phi **phi)
 		ft_get_current_time(&(*phi));
 		if (((*phi)->time - (*phi)->o_time) >= (*phi)->ti->t_die)
 		{
+			(*phi)->d_state = 1;
 			ft_dying_state(&(*phi));
 			ft_unlock_mutexes(&(*phi));
 			return ;
@@ -67,6 +71,7 @@ void	ft_sleeping(t_phi **phi)
 		ft_get_current_time(&(*phi));
 		if (((*phi)->time - (*phi)->o_time) >= (*phi)->ti->t_die)
 		{
+			(*phi)->d_state = 1;
 			ft_dying_state(&(*phi));
 			return ;
 		}
