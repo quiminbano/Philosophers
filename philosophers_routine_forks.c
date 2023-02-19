@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:47:23 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/18 21:18:13 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/19 17:38:03 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	ft_taking_fork_print(t_phi **phi)
 {
-	ft_get_current_time(&(*phi));
-	printf("%ldms %d is taking a fork.\n", (*phi)->time, (*phi)->phi_num);
+	printf("%ld %d is taking a fork\n", (*phi)->time, (*phi)->phi_num);
 	if ((*phi)->ti->philo_1 == 0)
-		printf("%ldms %d is taking a fork.\n", (*phi)->time, (*phi)->phi_num);
+		printf("%ld %d is taking a fork\n", (*phi)->time, (*phi)->phi_num);
 	else
 	{
+		ft_get_current_time(&(*phi));
 		while (((*phi)->time - (*phi)->o_time) < (*phi)->ti->t_die)
 			ft_get_current_time(&(*phi));
 		(*phi)->d_state = 1;
