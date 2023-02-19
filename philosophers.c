@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/17 22:48:00 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/19 19:26:31 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ static int	ft_prepare_threads(t_phi **phi)
 	while (temp != NULL)
 	{
 		pthread_mutex_init(&(temp->mutex), NULL);
+		temp = temp->left;
+	}
+	temp = (*phi);
+	while (temp != NULL)
+	{
 		pthread_create(&(temp->po), NULL, &ft_start_routine, &(*temp));
 		temp = temp->left;
 	}
