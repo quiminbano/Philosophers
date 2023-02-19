@@ -22,7 +22,7 @@ philosophers_list.o philosophers_time.o philosophers_routine.o \
 philosophers_unlock_fork.o philosophers_routine_forks.o \
 philosophers_state.o philosophers_error.o
 
-FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g -static-libasan
+FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g -static-libsan
 
 CC = cc
 
