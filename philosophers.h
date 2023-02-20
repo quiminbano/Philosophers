@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/19 14:43:22 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:42:52 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_phi
 	int				count_eat;
 	int				d_state;
 	int				e_counter;
+	int				cycle;
 	long			s1;
 	long			us1;
 	long			time;
@@ -76,6 +77,7 @@ void	ft_sleeping(t_phi **phi);
 void	ft_dying_state(t_phi **phi);
 void	ft_eating_state(t_phi **phi);
 void	ft_unlock_mutexes(t_phi **phi);
+void	ft_unlock(t_phi **phi);
 void	ft_free_list(t_phi **phi);
 
 #endif

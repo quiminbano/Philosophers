@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:01:19 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/18 21:18:32 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:43:17 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_phi	*ft_lstnew(int num, t_data *p)
 	new->d_state = 0;
 	new->e_counter = 0;
 	new->o_time = 0;
+	new->cycle = 0;
 	new->left = NULL;
 	return (new);
 }

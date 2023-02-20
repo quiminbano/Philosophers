@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 20:38:22 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/19 17:37:54 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 10:18:22 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	ft_dying_state(t_phi **phi)
 		(*phi)->ti->die_st = 1;
 	}
 	if ((*phi)->ti->die_st == 1 && (*phi)->d_state == 0)
+	{
 		(*phi)->d_state = 1;
+		ft_unlock(&(*phi));
+	}
 	pthread_mutex_unlock(&((*phi)->ti->mutex_dead));
 }
 
