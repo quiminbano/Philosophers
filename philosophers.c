@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/20 15:27:58 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:28:38 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 static void	*ft_start_routine(void *p)
 {
-	t_phi	*phi;
+	t_phi		*phi;
 
 	phi = (t_phi *)p;
+	ft_wait_threads(&(phi));
 	while ((phi->d_state == 0) && (phi->ti->philo_1 == 0) && \
 		(phi->e_counter < phi->ti->n_philo))
 	{
@@ -46,6 +47,7 @@ static int	ft_prepare_threads_aux(t_phi **phi)
 		temp = temp->left;
 	}
 	pthread_mutex_destroy(&((*phi)->ti->mutex_dead));
+	pthread_mutex_destroy(&((*phi)->ti->mutex_s));
 	if ((*phi)->ti->ti_eat != 0)
 		pthread_mutex_destroy(&((*phi)->ti->mutex_eat));
 	ft_free_list(&(*phi));
@@ -58,6 +60,7 @@ static int	ft_prepare_threads(t_phi **phi)
 
 	temp = (*phi);
 	pthread_mutex_init(&(*phi)->ti->mutex_dead, NULL);
+	pthread_mutex_init(&(*phi)->ti->mutex_s, NULL);
 	if (temp->ti->ti_eat != 0)
 		pthread_mutex_init(&(*phi)->ti->mutex_eat, NULL);
 	while (temp != NULL)
