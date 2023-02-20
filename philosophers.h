@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/20 17:27:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 21:30:34 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_data
 	pthread_mutex_t	mutex_dead;
 	pthread_mutex_t	mutex_eat;
 	pthread_mutex_t	mutex_s;
+	pthread_mutex_t	mutex_time;
 	struct s_phi	*begin;
 	int				s_error;
 	int				i;

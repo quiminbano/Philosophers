@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:03:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/20 15:46:36 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 21:16:23 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_eating(t_phi **phi)
 {
 	printf("%ld %d is eating\n", (*phi)->time, (*phi)->phi_num);
 	(*phi)->o_time = (*phi)->time;
+	usleep(30000);
 	while (((*phi)->time - (*phi)->o_time) < (*phi)->ti->t_eat)
 	{
 		ft_get_current_time(&(*phi));
@@ -69,6 +70,7 @@ void	ft_eating(t_phi **phi)
 void	ft_sleeping(t_phi **phi)
 {
 	printf("%ld %d is sleeping\n", (*phi)->time, (*phi)->phi_num);
+	usleep(30000);
 	while (((*phi)->time - (*phi)->o_time - (*phi)->ti->t_eat) < (*phi)->ti->t_sleep)
 	{
 		ft_get_current_time(&(*phi));
@@ -79,4 +81,5 @@ void	ft_sleeping(t_phi **phi)
 			return ;
 		}
 	}
+	usleep(1000);
 }

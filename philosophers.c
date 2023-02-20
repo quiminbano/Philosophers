@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:19:49 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/20 17:28:38 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:32:20 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int	ft_prepare_threads_aux(t_phi **phi)
 	}
 	pthread_mutex_destroy(&((*phi)->ti->mutex_dead));
 	pthread_mutex_destroy(&((*phi)->ti->mutex_s));
+	pthread_mutex_destroy(&((*phi)->ti->mutex_time));
 	if ((*phi)->ti->ti_eat != 0)
 		pthread_mutex_destroy(&((*phi)->ti->mutex_eat));
 	ft_free_list(&(*phi));
@@ -59,8 +60,10 @@ static int	ft_prepare_threads(t_phi **phi)
 	t_phi	*temp;
 
 	temp = (*phi);
+	(*phi)->ti->i = 0;
 	pthread_mutex_init(&(*phi)->ti->mutex_dead, NULL);
 	pthread_mutex_init(&(*phi)->ti->mutex_s, NULL);
+	pthread_mutex_init(&(*phi)->ti->mutex_time, NULL);
 	if (temp->ti->ti_eat != 0)
 		pthread_mutex_init(&(*phi)->ti->mutex_eat, NULL);
 	while (temp != NULL)
@@ -72,6 +75,8 @@ static int	ft_prepare_threads(t_phi **phi)
 	while (temp != NULL)
 	{
 		pthread_create(&(temp->po), NULL, &ft_start_routine, &(*temp));
+		if ((temp->phi_num % 2) == 1)
+			usleep(3000);
 		temp = temp->left;
 	}
 	return (ft_prepare_threads_aux(&(*phi)));
@@ -81,9 +86,6 @@ static int	ft_initialize_problem(t_data *p, t_phi **phi, char **av)
 {
 	p->n_philo = ft_atoi(av[1]);
 	p->i = 1;
-	gettimeofday(&(p->tp), NULL);
-	p->s0 = p->tp.tv_sec;
-	p->us0 = p->tp.tv_usec;
 	p->die_st = 0;
 	p->philo_1 = 0;
 	p->philo_eat_c = 0;

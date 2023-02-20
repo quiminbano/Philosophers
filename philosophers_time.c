@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 09:43:59 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/20 17:28:52 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/20 21:30:53 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_get_current_time(t_phi **phi)
 
 void	ft_wait_threads(t_phi **phi)
 {
-	static int	i = 1;
+	static int	i = 0;
 	
 	while ((*phi)->flag_loop == 0)
 	{
@@ -38,4 +38,13 @@ void	ft_wait_threads(t_phi **phi)
 			(*phi)->flag_loop = 1;
 		pthread_mutex_unlock(&((*phi)->ti->mutex_s));
 	}
+	pthread_mutex_lock(&((*phi)->ti->mutex_time));
+	if ((*phi)->ti->i == 0)
+	{
+		gettimeofday(&((*phi)->ti->tp), NULL);
+		(*phi)->ti->s0 = (*phi)->ti->tp.tv_sec;
+		(*phi)->ti->us0 = (*phi)->ti->tp.tv_usec;
+		(*phi)->ti->i = 1;
+	}
+	pthread_mutex_unlock(&((*phi)->ti->mutex_time));
 }
