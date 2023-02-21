@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/20 21:30:34 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:54:39 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_data
 typedef struct s_phi
 {
 	pthread_t		po;
-	pthread_mutex_t mutex;
+	pthread_mutex_t	mutex;
 	struct timeval	tim;
 	int				phi_num;
 	int				f_state;
@@ -73,6 +73,7 @@ t_phi	*ft_lstnew(int num, t_data *p);
 void	ft_add_to_list(t_phi **begin, int num, t_data *p);
 void	ft_print_list(t_phi **lst);
 void	ft_get_current_time(t_phi **phi);
+void	ft_get_current_time_small(t_phi **phi);
 void	ft_wait_threads(t_phi **phi);
 void	ft_routine_iter(t_phi *phi);
 void	ft_thinking(t_phi **phi);

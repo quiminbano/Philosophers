@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:03:50 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/20 21:16:23 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:52:03 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_routine_iter(t_phi *phi)
 
 void	ft_thinking(t_phi **phi)
 {
-	ft_get_current_time(&(*phi));
+	ft_get_current_time_small(&(*phi));
 	printf("%ld %d is thinking\n", (*phi)->time, (*phi)->phi_num);
 	if (((((*phi)->phi_num) % 2) == 0) && (*phi)->cycle == 0)
 	{
@@ -50,7 +50,6 @@ void	ft_eating(t_phi **phi)
 {
 	printf("%ld %d is eating\n", (*phi)->time, (*phi)->phi_num);
 	(*phi)->o_time = (*phi)->time;
-	usleep(30000);
 	while (((*phi)->time - (*phi)->o_time) < (*phi)->ti->t_eat)
 	{
 		ft_get_current_time(&(*phi));
@@ -65,13 +64,14 @@ void	ft_eating(t_phi **phi)
 	ft_unlock_mutexes(&(*phi));
 	if ((*phi)->ti->ti_eat > 0)
 		((*phi)->count_eat)++;
+	usleep(500);
 }
 
 void	ft_sleeping(t_phi **phi)
 {
 	printf("%ld %d is sleeping\n", (*phi)->time, (*phi)->phi_num);
-	usleep(30000);
-	while (((*phi)->time - (*phi)->o_time - (*phi)->ti->t_eat) < (*phi)->ti->t_sleep)
+	while (((*phi)->time - (*phi)->o_time - (*phi)->ti->t_eat) < \
+		((*phi)->ti->t_sleep))
 	{
 		ft_get_current_time(&(*phi));
 		if (((*phi)->time - (*phi)->o_time) >= (*phi)->ti->t_die)
@@ -81,5 +81,5 @@ void	ft_sleeping(t_phi **phi)
 			return ;
 		}
 	}
-	usleep(1000);
+	usleep(500);
 }

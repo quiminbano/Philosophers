@@ -6,7 +6,7 @@
 #    By: corellan <corellan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/08 16:29:16 by corellan          #+#    #+#              #
-#    Updated: 2023/02/19 19:12:27 by corellan         ###   ########.fr        #
+#    Updated: 2023/02/21 15:00:53 by corellan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ philosophers_list.o philosophers_time.o philosophers_routine.o \
 philosophers_unlock_fork.o philosophers_routine_forks.o \
 philosophers_state.o philosophers_error.o
 
-FLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread -g -static-libsan
+FLAGS = -Wall -Wextra -Werror -pthread
 
 CC = cc
 
