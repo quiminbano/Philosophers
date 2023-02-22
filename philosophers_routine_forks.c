@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:47:23 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/21 14:52:21 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/22 12:13:41 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,25 @@ static void	ft_taking_fork_time(t_phi **phi)
 	}
 }
 
-void	ft_taking_fork(t_phi **phi)
+static int	ft_am_i_dead(t_phi **phi)
+{
+	if (((((*phi)->ti->t_die) - \
+		(((*phi)->time - (*phi)->o_time) - (*phi)->ti->t_sleep)) < \
+		(((*phi)->ti->t_eat) - 5)) && ((*phi)->cycle == 2))
+	{
+		while (((*phi)->time - (*phi)->o_time) < ((*phi)->ti->t_die))
+			ft_get_current_time(&(*phi));
+	}
+	else
+	{
+		(*phi)->cycle = 2;
+		return (0);
+	}
+		(*phi)->cycle = 2;
+	return (1);
+}
+
+static void	ft_i_am_alive(t_phi **phi)
 {
 	pthread_mutex_lock(&((*phi)->mutex));
 	if ((*phi)->f_state == 0)
@@ -60,6 +78,18 @@ void	ft_taking_fork(t_phi **phi)
 		if ((*phi)->left->f_state == 0)
 			(*phi)->left->f_state = 1;
 	}
+}
+
+void	ft_taking_fork(t_phi **phi)
+{
+	if (ft_am_i_dead(&(*phi)) == 1)
+	{
+		(*phi)->d_state = 1;
+		ft_dying_state(&(*phi));
+		return ;
+	}
+	else
+		ft_i_am_alive(&(*phi));
 	if ((*phi)->ti->philo_1 == 0)
 		ft_taking_fork_time(&(*phi));
 	if ((*phi)->d_state == 1)
