@@ -6,14 +6,13 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 13:34:41 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/22 11:19:37 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/23 13:27:00 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
