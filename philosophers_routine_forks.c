@@ -6,7 +6,7 @@
 /*   By: corellan <corellan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 11:47:23 by corellan          #+#    #+#             */
-/*   Updated: 2023/02/23 19:49:46 by corellan         ###   ########.fr       */
+/*   Updated: 2023/02/24 12:51:13 by corellan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int	ft_am_i_dead(t_phi **phi)
 	else if (((((*phi)->ti->t_die) - \
 		(((*phi)->time - (*phi)->o_time) - (*phi)->ti->t_sleep)) < \
 		((2 * (*phi)->ti->t_eat) - 5)) && ((*phi)->cycle == 2) && \
-		((*phi)->ti->n_philo % 2 == 1))
+		((*phi)->ti->n_philo % 2 == 1) && \
+		((*phi)->ti->n_philo == (*phi)->phi_num))
 	{
 		while (((*phi)->time - (*phi)->o_time) < ((*phi)->ti->t_die))
 			ft_get_current_time(&(*phi));
